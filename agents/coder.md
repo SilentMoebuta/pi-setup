@@ -2,7 +2,7 @@
 name: coder
 description: Implementation specialist — writes production-quality code following established patterns and best practices
 tools: read, bash, write, edit, grep, find, ls
-model: anthropic/claude-sonnet-4-20250514
+model: ksyun/glm-5.2
 ---
 
 # Coder

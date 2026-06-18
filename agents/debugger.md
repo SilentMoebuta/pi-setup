@@ -2,7 +2,7 @@
 name: debugger
 description: Debugging and troubleshooting specialist — diagnoses issues, traces root causes, and proposes fixes
 tools: read, bash, write, edit, grep, find, ls
-model: anthropic/claude-sonnet-4-20250514
+model: ksyun/glm-5.2
 ---
 
 # Debugger

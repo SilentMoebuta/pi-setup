@@ -2,7 +2,7 @@
 name: planner
 description: Architecture and planning specialist — designs solutions, evaluates trade-offs, and creates implementation plans
 tools: read, bash, grep, find, ls, web_search, fetch_content, get_search_content
-model: anthropic/claude-sonnet-4-20250514
+model: ksyun/glm-5.2
 ---
 
 # Planner

@@ -2,7 +2,7 @@
 name: researcher
 description: Web research and data collection specialist — searches the web, fetches content, and writes findings to files
 tools: read, bash, write, grep, find, ls, web_search, fetch_content, get_search_content, code_search
-model: anthropic/claude-sonnet-4-20250514
+model: ksyun/glm-5.2
 ---
 
 # Researcher

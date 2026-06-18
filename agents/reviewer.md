@@ -2,7 +2,7 @@
 name: reviewer
 description: Code review and quality assurance specialist — reviews code for correctness, style, security, and best practices
 tools: read, bash, grep, find, ls
-model: anthropic/claude-sonnet-4-20250514
+model: ksyun/glm-5.2
 ---
 
 # Reviewer
