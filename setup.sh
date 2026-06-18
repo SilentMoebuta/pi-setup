@@ -1,9 +1,9 @@
 #!/bin/bash
 # Pi Agent 一键配置（SilentMoebuta 自维护环境）
-# 仓库: git@github.com:SilentMoebuta/pi-setup (private)
+# 仓库: https://github.com/SilentMoebuta/pi-setup (public)
 #
 # 用法:  curl -fsSL https://raw.githubusercontent.com/SilentMoebuta/pi-setup/main/setup.sh | bash
-#   或:  git clone git@github.com:SilentMoebuta/pi-setup && bash pi-setup/setup.sh
+#   或:  git clone https://github.com/SilentMoebuta/pi-setup && bash pi-setup/setup.sh
 #
 # 幂等: 可重复运行，已存在的配置不覆盖（除非传 --force）。
 set -e
@@ -46,15 +46,26 @@ else
   echo "  ✓ pi 已安装，跳过"
 fi
 
-# -------- 2. git SSH 变通（github.com:443 阻断的永久修复）--------
+# -------- 2. git SSH 变通（可选：仅当 HTTPS 访问 github.com 被阻断时）--------
 echo ""
-echo "[2/6] 配置 git SSH 变通（github.com:443 阻断）..."
-EXISTING=$(git config --global --get url."git@github.com:".insteadOf 2>/dev/null || true)
-if [ -z "$EXISTING" ]; then
-  git config --global url."git@github.com:".insteadOf "https://github.com/"
-  echo "  ✓ 已配置 url.insteadOf（HTTPS → SSH）"
+echo "[2/6] 检查 github.com 连通性（部分网络阻断 443 端口，需 SSH 变通）..."
+if curl -sfI --max-time 8 https://github.com >/dev/null 2>&1; then
+  echo "  ✓ HTTPS 可访 github.com，无需 SSH 变通"
 else
-  echo "  ✓ 已存在 insteadOf 配置，跳过"
+  echo "  ⚠️  HTTPS 访问 github.com 失败，配置 git SSH 变通（HTTPS → SSH）..."
+  if [ ! -f ~/.ssh/id_ed25519 ] && [ ! -f ~/.ssh/id_rsa ]; then
+    echo "  ⚠️  未检测到 SSH key。SSH 变通需要 SSH key 已添加到 GitHub。"
+    echo "     生成: ssh-keygen -t ed25519 -C "your_email@example.com"，然后添加到 GitHub Settings。"
+    echo "     跳过 SSH 变通（pi install git: 可能失败）"
+  else
+    EXISTING=$(git config --global --get url."git@github.com:".insteadOf 2>/dev/null || true)
+    if [ -z "$EXISTING" ]; then
+      git config --global url."git@github.com:".insteadOf "https://github.com/"
+      echo "  ✓ 已配置 url.insteadOf（HTTPS → SSH）"
+    else
+      echo "  ✓ 已存在 insteadOf 配置，跳过"
+    fi
+  fi
 fi
 
 # -------- 3. 安装所有包（11 个）--------

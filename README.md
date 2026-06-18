@@ -1,13 +1,13 @@
 # pi-setup
 
-SilentMoebuta 的 pi agent 一键配置（private repo）。
+SilentMoebuta 的 pi agent 一键配置（public repo）。
 
 ## 用法
 
 ### 方式一：clone 后运行（推荐，含自定义 agents）
 
 ```bash
-git clone git@github.com:SilentMoebuta/pi-setup
+git clone https://github.com/SilentMoebuta/pi-setup
 cd pi-setup
 KSYUN_API_KEY="你的key" bash setup.sh
 ```
@@ -28,7 +28,7 @@ KSYUN_API_KEY="你的key" bash -c "$(curl -fsSL https://raw.githubusercontent.co
    echo 'export KSYUN_API_KEY="你的key"' >> ~/.zshrc   # 持久化
    ```
    获取：https://kspmas.ksyun.com/
-2. **SSH key 已添加到 GitHub**（用于 git@github.com 拉 private repo + 自维护包）
+2. **无需 SSH key**（所有 repo 均为 public，HTTPS 即可 clone + pi install）。若你所在网络阻断 github.com:443，setup.sh 会自动探测并配 SSH 变通（此时需 SSH key，见脚本提示）。
 
 ## setup.sh 做什么
 
@@ -53,7 +53,7 @@ bash setup.sh --force   # 覆盖已有 settings.json / models.json
 
 ## 安全说明
 
-- **本 repo 设为 private**：仅 SilentMoebuta 可 clone。自维护的 7 个 pi-* 包也是 private（若设了），其他机器需有对应 SSH key。
+- **本 repo 为 public**：任何人可 clone。7 个 pi-* 包也已 public（MIT 许可，开源心态）。
 - `models.json` 用 `$KSYUN_API_KEY` 环境变量引用，**API key 不入仓**。
 - `setup.sh` 在生成 models.json 时保留 `$KSYUN_API_KEY` 字面引用，pi 运行时解析环境变量。
 
