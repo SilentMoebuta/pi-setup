@@ -57,6 +57,12 @@ bash setup.sh --force   # 覆盖已有 settings.json / models.json
 - `models.json` 用 `$KSYUN_API_KEY` 环境变量引用，**API key 不入仓**。
 - `setup.sh` 在生成 models.json 时保留 `$KSYUN_API_KEY` 字面引用，pi 运行时解析环境变量。
 
+## 装完后的默认行为
+
+- **pi-plan-execute-gate**：默认 **Build Mode**（全工具）。装了不会锁你只读；只有主动 `/plan` 才进只读模式。`/execute` 无条件切回 Build。若想恢复 superpowers 严格门（强制先写计划再执行），在项目根建 `.pi/plan-execute.json`：`{"defaultMode":"plan","requirePlanForExecute":true}`。
+- **pi-goal**：默认与 pi-superpowers 配套（goal loop 注入 superpowers 工作流纪律）。若不用 superpowers，在项目根建 `.pi/goal.json`：`{"superpowersIntegration":false}`，goal loop 即独立运行。
+- 其余扩展（pi-memory/pi-hooks-system/pi-auto-fix-loop/pi-event-reminders）：开箱即用，无工作流强制。
+
 ## 自维护包一览
 
 | 包 | 作用 | 仓库 |
