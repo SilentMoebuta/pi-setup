@@ -2,7 +2,48 @@
 
 SilentMoebuta 的 pi agent 一键配置（public repo）。
 
-## 用法
+## 迁移到其他机器
+
+已有 pi 环境，想把配置、agents、包列表搬到新机器：
+
+### 源机器（打包）
+
+```bash
+git clone https://github.com/SilentMoebuta/pi-setup
+cd pi-setup
+
+bash migrate-backup.sh              # 基础：配置 + agents + 手动 skills
+bash migrate-backup.sh --memory     # 含记忆数据库
+bash migrate-backup.sh --all        # 全部（含会话历史）
+```
+
+生成 `pi-migrate-*.tar.gz`。⚠️ 含 auth.json（API key），安全传输。
+
+### 目标机器（恢复）
+
+```bash
+# 1. 解压
+tar xzf pi-migrate-*.tar.gz -C ~
+
+# 2. 安装 pi（若未装）
+curl -fsSL https://pi.dev/install.sh | sh
+export PATH="$HOME/.local/bin:$PATH"
+
+# 3. 恢复扩展包（按 settings.json 中 packages 列表重装所有包）
+pi update --extensions
+
+# 4. 设置 API key 环境变量（如 DEEPSEEK_API_KEY / KSYUN_API_KEY）
+export DEEPSEEK_API_KEY="你的key"
+
+# 5. 启动
+pi
+```
+
+恢复后你的 provider、model、thinking level、包列表、自定义 agents 与源机器完全一致。
+
+## 全新安装
+
+### 方式一：clone 后运行（推荐，含自定义 agents）
 
 ### 方式一：clone 后运行（推荐，含自定义 agents）
 
